@@ -1,169 +1,87 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MERCA PY - Comprá y Vendé en todo Paraguay</title>
+<title>MERCA PY - Comprá y Vendé en Paraguay</title>
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#f2f2f2;padding-bottom:30px}
-header{background:#D32F2F;color:white;text-align:center;padding:20px}
-header h1{margin:0;font-size:32px}
-.badge{background:white;color:#D32F2F;display:inline-block;padding:6px 16px;border-radius:20px;font-weight:bold;margin-top:8px;font-size:13px}
-.aviso{margin:12px;background:#FFF3E0;border:2px solid #FF9800;padding:14px;border-radius:12px;text-align:center}
-.bloqueo{background:#FFEBEE;border:2px solid red;padding:16px;border-radius:12px;margin:12px;text-align:center}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px}
-.card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,0.1)}
-.card img{width:100%;height:140px;object-fit:cover}
-.card-body{padding:10px}
-.precio{color:#d32f2f;font-weight:bold;font-size:18px}
-.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:bold;font-size:15px;cursor:pointer}
-.btn-wp{background:#25D366;color:white}
-.btn-pub{background:#1976D2;color:white}
-.form{background:white;margin:12px;padding:15px;border-radius:12px}
-.form input,.form select{width:100%;padding:12px;border-radius:8px;border:1px solid #ddd;margin-top:8px;box-sizing:border-box;font-size:15px}
-.admin{background:#111;color:white;margin:12px;padding:15px;border-radius:12px;text-align:center}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f5f5f5}
+.header{background:#d92b1f;color:white;text-align:center;padding:25px 15px}
+.header h1{font-size:32px}
+.header p{font-size:16px;margin-top:5px}
+.badge{background:white;color:#d92b1f;display:inline-block;padding:8px 18px;border-radius:20px;font-weight:bold;margin-top:12px;font-size:14px}
+.promo{background:#fff3e0;border:2px solid #ff9800;margin:15px;border-radius:12px;padding:15px;text-align:center;font-size:16px;line-height:1.4}
+.buscar{margin:0 15px}
+.buscar input{width:100%;padding:14px;border-radius:12px;border:1px solid #ddd;font-size:16px;outline:none}
+.vacio{background:white;margin:15px;border-radius:15px;padding:30px 20px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.vacio h2{font-size:22px;margin-bottom:10px}
+.vacio p{color:#666;line-height:1.5;margin-bottom:18px}
+.vacio .btn-verde{background:#25D366;color:white;border:none;padding:14px 25px;border-radius:10px;font-size:17px;font-weight:bold;width:100%}
+.publicar{background:white;margin:15px;border-radius:15px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.publicar h2{font-size:20px;margin-bottom:12px;text-align:center}
+.publicar input,.publicar textarea,.publicar select{width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #ddd;font-size:15px}
+.publicar button{background:#d92b1f;color:white;border:none;padding:14px;border-radius:10px;font-size:17px;font-weight:bold;width:100%}
+.pago{background:#fffde7;margin:15px;border-radius:15px;padding:20px;text-align:center}
+.pago button{background:#25D366;color:white;border:none;padding:14px;border-radius:10px;font-size:16px;font-weight:bold;width:100%;margin-top:12px}
+#admin{display:none;background:#111;color:white;margin:15px;border-radius:15px;padding:20px;text-align:center}
+#admin input{width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:none;font-size:15px}
+#admin button{background:#ffcc00;border:none;padding:14px;border-radius:10px;font-size:16px;font-weight:bold;width:100%}
+.footer{text-align:center;padding:20px;color:#888;font-size:13px}
 </style>
 </head>
 <body>
-<header>
+
+<div class="header">
 <h1>🛍️ MERCA PY</h1>
 <p>Comprá y Vendé en TODO Paraguay 🇵🇾</p>
-<div class="badge" id="estadoCuenta">Cargando...</div>
-</header>
+<div class="badge">🆓 1 MES GRATIS PARA VENDER</div>
+</div>
 
-<!-- AVISO DE DÍAS -->
-<div class="aviso" id="avisoDias"></div>
+<div class="promo">🎉 <b>1 MES GRATIS.</b> Publicá hoy y tenés 30 días gratis. Después solo 20.000 Gs por mes.</div>
 
-<!-- BLOQUEO AUTOMÁTICO -->
-<div id="zonaBloqueo"></div>
+<div class="buscar"><input type="text" placeholder="🔍 Buscar en todo Paraguay..."></div>
 
-<div style="padding:12px"><input id="buscar" placeholder="🔍 Buscar en todo Paraguay..." style="width:100%;padding:14px;border-radius:10px;border:1px solid #ddd;box-sizing:border-box" oninput="mostrar()"></div>
+<div class="vacio">
+<h2>🛒 Todavía no hay productos publicados</h2>
+<p>¡Sé el primer vendedor de MERCA PY!<br>Publicá hoy gratis y vendé en todo Paraguay.</p>
+<button class="btn-verde" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">📢 ¡Quiero Vender Gratis!</button>
+</div>
 
-<div class="grid" id="grid"></div>
-
-<!-- PUBLICAR -->
-<div class="form" id="formPublicar">
+<div class="publicar" id="form">
 <h2>📸 Publicá tu producto</h2>
-<p style="font-size:13px;color:#666">1 MES GRATIS - Después 20.000 Gs por mes</p>
-<input id="nombreProd" placeholder="¿Qué vendés? Ej: Remera Nike">
-<input id="precioProd" placeholder="Precio Gs Ej: 50000" type="number">
-<select id="catProd"><option>Ropa</option><option>Comida</option><option>Celulares</option><option>Calzado</option><option>Hogar</option><option>Vehículos</option><option>Otros</option></select>
-<input id="vendedorProd" placeholder="Tu nombre">
-<input id="ciudadProd" placeholder="Tu ciudad Ej: Caacupé, Asunción">
-<input id="wpProd" placeholder="Tu WhatsApp Ej: 595991247112">
-<input id="fotoProd" placeholder="Link de foto (opcional)">
-<button class="btn btn-pub" onclick="publicar()">🚀 PUBLICAR GRATIS</button>
+<input type="text" placeholder="Tu nombre">
+<input type="text" placeholder="Nombre del producto - Ej: Empanada">
+<input type="text" placeholder="Precio - Ej: 15.000 Gs">
+<select><option>Seleccioná tu ciudad</option><option>Asunción</option><option>Caacupé</option><option>Areguá</option><option>Ciudad del Este</option><option>Encarnación</option><option>Otra ciudad</option></select>
+<input type="text" placeholder="Tu WhatsApp - Ej: 0981 123 456">
+<textarea rows="3" placeholder="Describí tu producto..."></textarea>
+<button>✅ PUBLICAR GRATIS POR 30 DÍAS</button>
 </div>
 
-<!-- PAGO -->
-<div class="form" style="text-align:center;background:#FFFDE7">
-<h3>💰 ¿Querés seguir vendiendo?</h3>
-<p>Pagá 20.000 Gs por mes</p>
-<p><b>Banco Continental</b><br>Titular: Reinerio Ayala<br>Alias: <b>0991247112</b></p>
-<button class="btn btn-wp" onclick="mandarComprobante()">📤 Mandar Comprobante a Reinerio</button>
-<p style="font-size:12px;color:#777">Después que pagás, Reinerio te desbloquea en 1 minuto</p>
+<div class="pago">
+<h2>💰 ¿Querés seguir vendiendo?</h2>
+<p style="margin:10px 0">Pagá 20.000 Gs por mes<br><b>Banco Continental<br>Titular: Reinerio Ayala<br>Alias: 0991247112</b></p>
+<button>📩 Mandar Comprobante a Reinerio</button>
+<p style="font-size:13px;color:#888;margin-top:8px">Después que pagás, Reinerio te desbloquea en 1 minuto</p>
 </div>
 
-<!-- ADMIN SOLO PARA VOS -->
-<div class="admin">
-<h3>🔐 SOLO PARA VOS, REINERIO</h3>
-<p style="font-size:12px">Cuando un cliente te paga, poné su WhatsApp y desbloquealo</p>
-<input id="adminWp" placeholder="WhatsApp del cliente que pagó" style="width:100%;padding:12px;border-radius:8px;border:none;margin-top:8px;box-sizing:border-box">
-<input id="adminClave" placeholder="Tu clave: 1234" type="password" style="width:100%;padding:12px;border-radius:8px;border:none;margin-top:8px;box-sizing:border-box">
-<button class="btn" style="background:#FFD600;color:black;margin-top:10px" onclick="desbloquear()">✅ DESBLOQUEAR POR 30 DÍAS MÁS</button>
-<p id="adminMsg" style="font-size:13px"></p>
+<div id="admin">
+<h2>🔒 SOLO PARA VOS, REINERIO</h2>
+<p style="margin:10px 0;color:#ccc">Cuando un cliente te paga, poné su WhatsApp y desbloquealo</p>
+<input type="text" placeholder="WhatsApp del cliente que pagó">
+<input type="password" placeholder="Tu clave">
+<button>✅ DESBLOQUEAR POR 30 DÍAS MÁS</button>
 </div>
+
+<div class="footer">MERCA PY © 2026 - Hecho en Paraguay 🇵🇾<br>1 Mes Gratis • Luego 20.000 Gs/mes</div>
 
 <script>
-let productos = JSON.parse(localStorage.getItem('mercapy_productos')||'[]');
-if(productos.length==0){
- productos=[
- {nombre:"Remera Nike Original",precio:50000,cat:"Ropa",vendedor:"María - Caacupé",wp:"595991247112",foto:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400"},
- {nombre:"Hamburguesa EL SABOR",precio:15000,cat:"Comida",vendedor:"Reinerio - Caacupé",wp:"595991247112",foto:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400"},
- {nombre:"Zapatilla Adidas",precio:120000,cat:"Calzado",vendedor:"Juan - Asunción",wp:"595991247112",foto:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},
- ];
+// SOLO SE MUESTRA SI ENTRAS CON EL LINK SECRETO
+if(window.location.search.includes('soy-reinerio')){
+  document.getElementById('admin').style.display='block';
 }
-let clientes = JSON.parse(localStorage.getItem('mercapy_clientes')||'{}');
-let pagos = JSON.parse(localStorage.getItem('mercapy_pagos')||'{}');
-
-function diasRestantes(wp){
-  if(!wp) return 30;
-  let c = clientes[wp];
-  if(!c) return 30;
-  let inicio = new Date(c.inicio);
-  let vence = new Date(pagos[wp] ? pagos[wp] : inicio);
-  vence.setDate(vence.getDate()+30);
-  let hoy = new Date();
-  let diff = Math.ceil((vence - hoy)/(1000*60*60*24));
-  return diff;
-}
-function estaBloqueado(wp){
-  return diasRestantes(wp) <= 0;
-}
-function mostrar(){
-  let q = document.getElementById('buscar').value.toLowerCase();
-  let html="";
-  productos.forEach(p=>{
-    if(p.nombre.toLowerCase().includes(q)){
-      html+=`<div class="card"><img src="${p.foto}"><div class="card-body"><b>${p.nombre}</b><div style="font-size:12px">📍 ${p.vendedor}</div><div class="precio">${Number(p.precio).toLocaleString('es-PY')} Gs</div><button class="btn btn-wp" style="margin-top:6px" onclick="comprar('${p.wp}','${p.nombre}','${p.precio}')">💬 Comprar</button></div></div>`;
-    }
-  });
-  document.getElementById('grid').innerHTML = html;
-  // Estado general
-  let miWp = localStorage.getItem('mercapy_mi_wp')||'';
-  if(miWp){
-    let d = diasRestantes(miWp);
-    document.getElementById('estadoCuenta').innerText = d>0 ? `✅ Te quedan ${d} días gratis / pagados` : `🔒 CUENTA BLOQUEADA - Pagá 20.000 Gs`;
-    document.getElementById('avisoDias').innerHTML = d>0 ? `⏰ Hola! Te quedan <b>${d} días</b> para vender. Después se bloquea automático. Pagá 20.000 Gs para seguir.` : `⛔ Ya pasaron tus 30 días. Pagá para seguir vendiendo.`;
-    if(d<=0){
-      document.getElementById('zonaBloqueo').innerHTML = `<div class="bloqueo"><h2>🔒 CUENTA BLOQUEADA AUTOMÁTICAMENTE</h2><p>Pasó 1 mes. Para seguir publicando pagá 20.000 Gs</p><p><b>Alias: 0991247112 - Reinerio Ayala</b></p></div>`;
-      document.getElementById('formPublicar').style.display='none';
-    }
-  } else {
-    document.getElementById('estadoCuenta').innerText = "🆓 1 MES GRATIS PARA VENDER";
-    document.getElementById('avisoDias').innerHTML = `🎉 <b>1 MES GRATIS.</b> Publicá hoy y tenés 30 días gratis. Después solo 20.000 Gs por mes.`;
-  }
-}
-function publicar(){
-  let n=document.getElementById('nombreProd').value;
-  let pr=document.getElementById('precioProd').value;
-  let cat=document.getElementById('catProd').value;
-  let v=document.getElementById('vendedorProd').value;
-  let ciu=document.getElementById('ciudadProd').value;
-  let w=document.getElementById('wpProd').value;
-  let f=document.getElementById('fotoProd').value || "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400";
-  if(!n||!pr||!w){alert("Poné nombre, precio y WhatsApp");return;}
-  // Si es primera vez, guardar fecha de inicio
-  if(!clientes[w]){
-    clientes[w]={inicio:new Date().toISOString()};
-    localStorage.setItem('mercapy_clientes',JSON.stringify(clientes));
-    localStorage.setItem('mercapy_mi_wp',w);
-  }
-  if(estaBloqueado(w)){
-    alert("⛔ Tu cuenta está BLOQUEADA. Pasaron 30 días. Pagá 20.000 Gs a Alias 0991247112 y Reinerio te desbloquea.");
-    mostrar(); return;
-  }
-  productos.unshift({nombre:n,precio:Number(pr),cat:cat,vendedor:v+" - "+ciu,wp:w,foto:f});
-  localStorage.setItem('mercapy_productos',JSON.stringify(productos));
-  mostrar();
-  alert("✅ ¡Publicado! Te quedan "+diasRestantes(w)+" días. ¡A vender!");
-}
-function comprar(wp,nombre,precio){
-  window.open('https://wa.me/'+wp+'?text='+encodeURIComponent(`Hola! Vi tu producto en MERCA PY: ${nombre} - ${Number(precio).toLocaleString('es-PY')} Gs. ¿Todavía tenés?`));
-}
-function mandarComprobante(){
-  window.open('https://wa.me/595991247112?text='+encodeURIComponent('Hola Reinerio, soy de MERCA PY. Quiero pagar mis 20.000 Gs para seguir vendiendo. Te mando mi comprobante. Mi WhatsApp es: '));
-}
-function desbloquear(){
-  let w=document.getElementById('adminWp').value;
-  let clave=document.getElementById('adminClave').value;
-  if(clave!=="1234"){document.getElementById('adminMsg').innerText="❌ Clave incorrecta";return;}
-  if(!w){document.getElementById('adminMsg').innerText="Poné el WhatsApp del cliente";return;}
-  pagos[w]=new Date().toISOString();
-  localStorage.setItem('mercapy_pagos',JSON.stringify(pagos));
-  document.getElementById('adminMsg').innerText="✅ Desbloqueado por 30 días más. El cliente ya puede publicar de nuevo.";
-}
-mostrar();
 </script>
 </body>
 </html>
